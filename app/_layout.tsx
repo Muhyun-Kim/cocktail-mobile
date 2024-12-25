@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { Slot, useRouter } from "expo-router";
 import { useSelector } from "react-redux";
 import { RootState, store } from "../state/store";
+import { View, StyleSheet } from "react-native";
 
 function AuthGuard() {
   const router = useRouter();
@@ -12,11 +13,15 @@ function AuthGuard() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.replace("/auth/login"); // 비로그인 상태면 로그인 페이지로 리다이렉트
+      router.replace("/auth/login");
     }
   }, [isAuthenticated]);
 
-  return <Slot />;
+  return (
+    <View style={styles.container}>
+      <Slot />
+    </View>
+  );
 }
 
 export default function Layout() {
@@ -26,3 +31,10 @@ export default function Layout() {
     </Provider>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#000",
+  },
+});

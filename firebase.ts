@@ -1,4 +1,6 @@
-import { initializeApp, getApps } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
@@ -8,5 +10,8 @@ const firebaseConfig = {
   messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
 };
-const app = initializeApp(firebaseConfig);
-export default app;
+
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+
+export const auth = getAuth(app);
+export const db = getFirestore(app);
