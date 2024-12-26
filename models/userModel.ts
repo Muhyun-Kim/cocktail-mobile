@@ -1,5 +1,8 @@
-interface UserInfo {
+export interface UserInfo {
   userId: string;
-  userName: string;
+  createdAt: string;
+  deactivatedAt: string | null;
   email: string;
+  isDeactivated: boolean;
+  userName: string;
 }

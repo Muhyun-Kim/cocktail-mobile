@@ -1,4 +1,6 @@
 import { auth, db } from "@/firebase";
+import { UserInfo } from "@/models/userModel";
+import { saveUserId } from "@/storage/auth";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -42,7 +44,7 @@ export const loginWithEmail = async ({
 }: {
   email: string;
   password: string;
-}) => {
+}): Promise<UserInfo | null> => {
   try {
     const userCredential = await signInWithEmailAndPassword(
       auth,
@@ -51,12 +53,14 @@ export const loginWithEmail = async ({
     );
     const userId = userCredential.user.uid;
     const user = await getUserFromFirestore(userId);
+    await saveUserId(userId);
     if (!user) {
       throw new Error("User not found");
     }
-    return { userId, email, userName: user.userName };
+    return user;
   } catch (error) {
     console.log(error);
+    return null;
   }
 };
 
@@ -80,14 +84,27 @@ const saveUserToFirestore = async (
   }
 };
 
-const getUserFromFirestore = async (userId: string) => {
+export const getUserFromFirestore = async (
+  userId: string
+): Promise<UserInfo | null> => {
   const userRef = doc(db, "users", userId);
   try {
     const userDoc = await getDoc(userRef);
     if (!userDoc.exists()) {
       return null;
     }
-    return userDoc.data();
+    const data = userDoc.data();
+    const user: UserInfo = {
+      userId,
+      email: data.email,
+      userName: data.userName,
+      createdAt: data.createdAt.toDate().toString(),
+      isDeactivated: data.isDeactivated,
+      deactivatedAt: data.deactivatedAt
+        ? data.deactivatedAt.toDate().toString()
+        : null,
+    };
+    return user;
   } catch (error) {
     console.error("Failed to get user from Firestore:", error);
     throw error;
