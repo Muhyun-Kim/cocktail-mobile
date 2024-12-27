@@ -8,6 +8,7 @@ import { loadUserId } from "@/storage/auth";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "@/state/slices/authSlice";
 import { getUserFromFirestore } from "@/controllers/authController";
+import palette from "@/utils/palette";
 
 function AuthGuard() {
   const router = useRouter();
@@ -62,6 +63,6 @@ export default function Layout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000",
+    backgroundColor: palette.background,
   },
 });
