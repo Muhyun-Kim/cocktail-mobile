@@ -1,4 +1,4 @@
-const darkPalette = {
+const palette = {
   // 주요 색상 (Primary)
   primary: "#FF7043", // 밝은 오렌지 (칵테일의 따뜻함과 열정을 표현)
   primaryVariant: "#D84315", // 어두운 오렌지 (강렬한 느낌을 강조)
@@ -30,4 +30,4 @@ const darkPalette = {
   success: "#81C784", // 성공 상태 (밝은 초록색)
   warning: "#FFB74D", // 경고 상태 (밝은 오렌지)
 };
-export default darkPalette;
+export default palette;
