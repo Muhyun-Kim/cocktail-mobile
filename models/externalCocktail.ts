@@ -1,6 +1,6 @@
 export interface ExternalCocktail {
   dateModified: string | null;
-  idDrink: string | null;
+  idDrink: string;
   strAlcoholic: string | null;
   strCategory: string | null;
   strCreativeCommonsConfirmed: string | null;

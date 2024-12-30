@@ -1,7 +1,5 @@
 import { ExternalCocktail } from "@/models/externalCocktail";
 
-const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-
 export const getExternalCocktailList = async (alphabet: string) => {
   try {
     const res = await fetch(
