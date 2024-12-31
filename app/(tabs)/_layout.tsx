@@ -44,17 +44,6 @@ export default function TabsLayout() {
         name="search"
         options={{
           title: "検索",
-          headerRight: () => {
-            return (
-              <TouchableOpacity onPress={() => {}} style={{ marginRight: 15 }}>
-                <FontAwesome
-                  name="search"
-                  size={20}
-                  color={palette.onSurface}
-                />
-              </TouchableOpacity>
-            );
-          },
         }}
       />
       <Tabs.Screen name="map" options={{ title: "Map" }} />

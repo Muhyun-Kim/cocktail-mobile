@@ -1,6 +1,8 @@
 import { getExternalCocktailList } from "@/controllers/externalCocktailController";
 import { ExternalCocktail } from "@/models/externalCocktail";
 import palette from "@/utils/palette";
+import { FontAwesome } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -11,12 +13,19 @@ import {
   ActivityIndicator,
   Image,
 } from "react-native";
+import {
+  GestureHandlerRootView,
+  TextInput,
+} from "react-native-gesture-handler";
 
 export default function SearchScreen() {
   const [cocktailList, setCocktailList] = useState<ExternalCocktail[]>([]);
-  const [alphabetListNum, setAlphabetListNum] = useState<number>(0); // 'a'부터 시작
+  const [alphabetListNum, setAlphabetListNum] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchInitialCocktails = async () => {
@@ -29,6 +38,35 @@ export default function SearchScreen() {
     };
     fetchInitialCocktails();
   }, []);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        if (isSearching) {
+          return (
+            <GestureHandlerRootView>
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Search cocktails..."
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                autoFocus={true}
+                onBlur={() => setIsSearching(false)}
+              />
+            </GestureHandlerRootView>
+          );
+        }
+        return (
+          <TouchableOpacity
+            onPress={() => setIsSearching(true)}
+            style={{ marginRight: 15 }}
+          >
+            <FontAwesome name="search" size={20} color={palette.onSurface} />
+          </TouchableOpacity>
+        );
+      },
+    });
+  }, [isSearching, searchQuery, navigation]);
 
   const loadMoreCocktails = async () => {
     if (loading || alphabetListNum >= alphabet.length - 1) return; // 더 이상 로드할 알파벳이 없을 때 종료
@@ -104,5 +142,15 @@ const styles = StyleSheet.create({
   image: {
     width: 120,
     height: 120,
+  },
+  searchInput: {
+    height: 40,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    backgroundColor: palette.surface,
+    color: palette.onSurface,
+    fontSize: 16,
+    flex: 1,
+    marginRight: 10,
   },
 });
