@@ -3,6 +3,7 @@ import { ExternalCocktail } from "@/models/externalCocktail";
 import palette from "@/utils/palette";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -26,6 +27,7 @@ export default function SearchScreen() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   const navigation = useNavigation();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchInitialCocktails = async () => {
@@ -84,7 +86,15 @@ export default function SearchScreen() {
   };
 
   const renderItem = ({ item }: { item: ExternalCocktail }) => (
-    <TouchableOpacity style={styles.cocktailContainer}>
+    <TouchableOpacity
+      style={styles.cocktailContainer}
+      onPress={() =>
+        router.push({
+          pathname: "/external-cocktail/[id]",
+          params: { id: item.idDrink },
+        })
+      }
+    >
       <Image
         source={{
           uri:

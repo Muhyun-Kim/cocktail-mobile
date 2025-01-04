@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Provider } from "react-redux";
-import { Slot, useRouter } from "expo-router";
+import { Slot, useRouter, Stack } from "expo-router";
 import { useSelector } from "react-redux";
 import { RootState, store } from "../state/store";
 import { View, StyleSheet } from "react-native";
@@ -46,9 +46,24 @@ function AuthGuard() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: palette.surface,
+        },
+        headerTintColor: palette.onBackground,
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
+      }}
+    >
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="external-cocktail/[id]"
+        options={{ headerBackTitle: "戻る" }}
+      />
       <Slot />
-    </View>
+    </Stack>
   );
 }
 
@@ -59,10 +74,3 @@ export default function Layout() {
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: palette.background,
-  },
-});
