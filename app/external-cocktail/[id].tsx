@@ -26,7 +26,6 @@ export default function ExternalCocktailDetail() {
         headerTitle: cocktail.strDrink,
       });
     }
-    console.log(cocktail);
   }, [cocktail, navigation]);
   return (
     <View style={styles.container}>
@@ -43,10 +42,8 @@ export default function ExternalCocktailDetail() {
         const strMeasureKey = `strMeasure${index}` as keyof ExternalCocktail;
         if (cocktail?.[ingredientKey]) {
           return (
-            <View style={styles.ingredient}>
-              <Text style={styles.text} key={index}>
-                {`${cocktail[ingredientKey]}: `}
-              </Text>
+            <View style={styles.ingredient} key={ingredientKey}>
+              <Text style={styles.text}>{`${cocktail[ingredientKey]}: `}</Text>
               <Text style={styles.text}>
                 {cocktail[strMeasureKey] ? cocktail[strMeasureKey] : "tt"}
               </Text>

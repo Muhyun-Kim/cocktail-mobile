@@ -23,8 +23,8 @@ export default function TabsLayout() {
             iconName = "home";
           } else if (route.name === "search") {
             iconName = "search";
-          } else if (route.name === "map") {
-            iconName = "map";
+          } else if (route.name === "book") {
+            iconName = "book";
           } else if (route.name === "profile") {
             iconName = "user";
           } else {
@@ -46,7 +46,7 @@ export default function TabsLayout() {
           title: "検索",
         }}
       />
-      <Tabs.Screen name="map" options={{ title: "Map" }} />
+      <Tabs.Screen name="book" options={{ title: "Book" }} />
       <Tabs.Screen name="profile" options={{ title: "Profile" }} />
     </Tabs>
   );

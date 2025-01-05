@@ -62,6 +62,7 @@ function AuthGuard() {
         name="external-cocktail/[id]"
         options={{ headerBackTitle: "戻る" }}
       />
+      <Stack.Screen name="user-cocktail/[id]" />
       <Slot />
     </Stack>
   );

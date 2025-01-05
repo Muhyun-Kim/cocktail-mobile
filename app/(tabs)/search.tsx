@@ -13,6 +13,7 @@ import {
   FlatList,
   ActivityIndicator,
   Image,
+  TouchableWithoutFeedback,
 } from "react-native";
 import {
   GestureHandlerRootView,
@@ -43,18 +44,21 @@ export default function SearchScreen() {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => {
+      headerRight: () => {},
+      headerLeft: () => {
         if (isSearching) {
           return (
             <GestureHandlerRootView>
-              <TextInput
-                style={styles.searchInput}
-                placeholder="Search cocktails..."
-                value={searchQuery}
-                onChangeText={setSearchQuery}
-                autoFocus={true}
-                onBlur={() => setIsSearching(false)}
-              />
+              <TouchableWithoutFeedback onPress={() => setIsSearching(false)}>
+                <TextInput
+                  style={styles.searchInput}
+                  placeholder="Search cocktails..."
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                  autoFocus={true}
+                  onBlur={() => setIsSearching(false)}
+                />
+              </TouchableWithoutFeedback>
             </GestureHandlerRootView>
           );
         }
