@@ -1,6 +1,5 @@
 import { loginWithEmail } from "@/controllers/authController";
 import { setUserInfo } from "@/state/slices/authSlice";
-import { store } from "@/state/store";
 import { router } from "expo-router";
 import { useState } from "react";
 import {

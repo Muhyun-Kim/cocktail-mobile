@@ -1,13 +1,14 @@
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
 import { db, storage } from "@/firebase";
 import { UserCocktail } from "@/models/userCocktail";
 import { addDoc, collection, doc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { v4 as uuidv4 } from "uuid";
 
 export interface CreateUserCocktailParams {
   createUserId: string;
+  imageFile: string | null;
   name: string;
-  imageFile: string;
   ingredients: string[];
   measures: string[];
   mixingMethod: string;
@@ -20,8 +21,8 @@ export interface CreateUserCocktailParams {
 
 export const createUserCocktail = async ({
   createUserId,
-  name,
   imageFile,
+  name,
   ingredients,
   measures,
   mixingMethod,
