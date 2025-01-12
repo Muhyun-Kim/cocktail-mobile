@@ -12,6 +12,7 @@ import {
   FlatList,
   Image,
 } from "react-native";
+import FastImage from "expo-fast-image";
 
 export default function MapScreen() {
   const router = useRouter();
@@ -27,7 +28,7 @@ export default function MapScreen() {
   }, []);
   const renderItem = ({ item }: { item: UserCocktail }) => (
     <TouchableOpacity style={styles.cocktailContainer} onPress={() => {}}>
-      <Image
+      <FastImage
         source={{
           uri:
             item.imageUrl ||
@@ -98,6 +99,5 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     resizeMode: "cover",
-    backgroundColor: "#ccc",
   },
 });
