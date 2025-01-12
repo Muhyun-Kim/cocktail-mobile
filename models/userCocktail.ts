@@ -14,6 +14,7 @@ export interface UserCocktailLike {
 }
 
 export interface UserCocktail {
+  id?: string;
   createUserId: string;
   name: string;
   imageUrl: string | null;

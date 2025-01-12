@@ -6,7 +6,6 @@ import { addDoc, collection, doc, getDocs } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export interface CreateUserCocktailParams {
-  cocktailId?: string;
   createUserId: string;
   imageFile: string | null;
   name: string;
@@ -23,10 +22,14 @@ export interface CreateUserCocktailParams {
 export const readUserRecipesList = async () => {
   var userCocktailList: UserCocktail[] = [];
   const userCocktailRef = collection(db, "userCocktails");
-  const snapshot = await getDocs(userCocktailRef);
-  snapshot.forEach((doc) => {
-    userCocktailList.push(doc.data() as UserCocktail);
-  });
+  try {
+    const snapshot = await getDocs(userCocktailRef);
+    snapshot.forEach((doc) => {
+      userCocktailList.push({ id: doc.id, ...doc.data() } as UserCocktail);
+    });
+  } catch (e) {
+    console.log(e);
+  }
   return userCocktailList;
 };
 
